@@ -6,54 +6,67 @@
   <bpmn:process id="PizzaOrder" isExecutable="true">
     <bpmn:laneSet id="LaneSet_0tc36yx">
       <bpmn:lane id="Lane_0lq815j" name="Customer">
-        <bpmn:flowNodeRef>StartEvent_0ww2is2</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_18ms6hk</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_033vdil</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>StartEvent_0ww2is2</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1qsqt8w" name="Delivery" />
       <bpmn:lane id="Lane_11vcisd" name="Kitchen" />
       <bpmn:lane id="Lane_0tiewd6" name="Service">
-        <bpmn:flowNodeRef>ExclusiveGateway_0rjixib</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_17gh2c0</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>ScriptTask_0ozzx3x</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ExclusiveGateway_0rjixib</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_1qoqwsl</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ScriptTask_15lf0lz</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
-    <bpmn:startEvent id="StartEvent_0ww2is2" name="New order event" camunda:formKey="embedded:app:forms/ZamowieniePizzy.html" camunda:initiator="inicjator">
-      <bpmn:outgoing>SequenceFlow_1pkf9qt</bpmn:outgoing>
-    </bpmn:startEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_1pkf9qt" sourceRef="StartEvent_0ww2is2" targetRef="ExclusiveGateway_0rjixib" />
+    <bpmn:sequenceFlow id="SequenceFlow_1pkf9qt" sourceRef="StartEvent_0ww2is2" targetRef="Task_1qoqwsl" />
     <bpmn:sequenceFlow id="SequenceFlow_0rorc5j" name="Yes" sourceRef="ExclusiveGateway_0rjixib" targetRef="Task_17gh2c0" />
-    <bpmn:exclusiveGateway id="ExclusiveGateway_0rjixib" name="CanRequestBeFulfilled?" default="SequenceFlow_0rorc5j">
-      <bpmn:incoming>SequenceFlow_1pkf9qt</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_0rorc5j</bpmn:outgoing>
-      <bpmn:outgoing>SequenceFlow_0vsk4hv</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_1co4tvg" sourceRef="Task_17gh2c0" targetRef="Task_18ms6hk" />
+    <bpmn:sequenceFlow id="SequenceFlow_1v0dqtw" sourceRef="Task_18ms6hk" targetRef="EndEvent_033vdil" />
+    <bpmn:sequenceFlow id="SequenceFlow_0vsk4hv" name="No" sourceRef="ExclusiveGateway_0rjixib" targetRef="ScriptTask_15lf0lz">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!decyzja_czyRealizowacZamowienie}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:userTask id="Task_18ms6hk" name="Collect information about order" camunda:formKey="embedded:app:forms/StanZamowienia.html" camunda:assignee="${inicjator}">
+      <bpmn:incoming>SequenceFlow_1co4tvg</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_09i0t2w</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1v0dqtw</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_02d5ejb" sourceRef="Task_1qoqwsl" targetRef="ExclusiveGateway_0rjixib" />
     <bpmn:scriptTask id="Task_17gh2c0" name="Pizza is delivered by driver" scriptFormat="groovy">
       <bpmn:incoming>SequenceFlow_0rorc5j</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1co4tvg</bpmn:outgoing>
       <bpmn:script>execution.setVariable("decyzja_czyPozytywna", true)
 execution.setVariable("decyzja_uzasadnienie", "Pizza is delivered")</bpmn:script>
     </bpmn:scriptTask>
-    <bpmn:sequenceFlow id="SequenceFlow_1co4tvg" sourceRef="Task_17gh2c0" targetRef="Task_18ms6hk" />
-    <bpmn:sequenceFlow id="SequenceFlow_1v0dqtw" sourceRef="Task_18ms6hk" targetRef="EndEvent_033vdil" />
-    <bpmn:scriptTask id="ScriptTask_0ozzx3x" name="Order is canceled" scriptFormat="groovy">
-      <bpmn:incoming>SequenceFlow_0vsk4hv</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_0lfvd1g</bpmn:outgoing>
-      <bpmn:script>execution.setVariable("decyzja_czyPozytywna", false)
-execution.setVariable("decyzja_uzasadnienie", "Order is canceled")</bpmn:script>
-    </bpmn:scriptTask>
-    <bpmn:sequenceFlow id="SequenceFlow_0vsk4hv" name="Nie" sourceRef="ExclusiveGateway_0rjixib" targetRef="ScriptTask_0ozzx3x">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${zamowienie_pizza == 'Peperoni'}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_0lfvd1g" sourceRef="ScriptTask_0ozzx3x" targetRef="Task_18ms6hk" />
-    <bpmn:userTask id="Task_18ms6hk" name="Collect information about order" camunda:formKey="embedded:app:forms/StanZamowienia.html" camunda:assignee="${inicjator}">
-      <bpmn:incoming>SequenceFlow_1co4tvg</bpmn:incoming>
-      <bpmn:incoming>SequenceFlow_0lfvd1g</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_1v0dqtw</bpmn:outgoing>
-    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_0rjixib" name="CanRequestBeFulfilled?" default="SequenceFlow_0rorc5j">
+      <bpmn:incoming>SequenceFlow_02d5ejb</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0rorc5j</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_0vsk4hv</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
     <bpmn:endEvent id="EndEvent_033vdil">
       <bpmn:incoming>SequenceFlow_1v0dqtw</bpmn:incoming>
     </bpmn:endEvent>
+    <bpmn:businessRuleTask id="Task_1qoqwsl" name="Analise order" camunda:decisionRef="OrderDecision">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:outputParameter name="decyzja_uzasadnienie">${decisionResult.getSingleResult().decyzja_uzasadnienie}</camunda:outputParameter>
+          <camunda:outputParameter name="decyzja_czyRealizowacZamowienie">
+            <camunda:script scriptFormat="groovy">decisionResult.getSingleResult().getEntry("decyzja_czyRealizowacZamowienie");</camunda:script>
+          </camunda:outputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1pkf9qt</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_02d5ejb</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:startEvent id="StartEvent_0ww2is2" name="New order event" camunda:formKey="embedded:app:forms/ZamowieniePizzy.html" camunda:initiator="inicjator">
+      <bpmn:outgoing>SequenceFlow_1pkf9qt</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:scriptTask id="ScriptTask_15lf0lz" name="Cancel order" scriptFormat="groovy">
+      <bpmn:incoming>SequenceFlow_0vsk4hv</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_09i0t2w</bpmn:outgoing>
+      <bpmn:script>execution.setVariable("decyzja_czyPozytywna", false)</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="SequenceFlow_09i0t2w" sourceRef="ScriptTask_15lf0lz" targetRef="Task_18ms6hk" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0fq241w">
@@ -73,63 +86,68 @@ execution.setVariable("decyzja_uzasadnienie", "Order is canceled")</bpmn:script>
         <dc:Bounds x="-493" y="283" width="1391" height="370" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ExclusiveGateway_0rjixib_di" bpmnElement="ExclusiveGateway_0rjixib" isMarkerVisible="true">
-        <dc:Bounds x="-411" y="372" width="50" height="50" />
+        <dc:Bounds x="-378" y="440" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="-502" y="383" width="88" height="27" />
+          <dc:Bounds x="-469" y="451" width="88" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="StartEvent_0ww2is2_di" bpmnElement="StartEvent_0ww2is2">
-        <dc:Bounds x="-404" y="209" width="36" height="36" />
+        <dc:Bounds x="-371" y="209" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="-427" y="189" width="81" height="14" />
+          <dc:Bounds x="-394" y="189" width="81" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1pkf9qt_di" bpmnElement="SequenceFlow_1pkf9qt">
-        <di:waypoint x="-386" y="245" />
-        <di:waypoint x="-386" y="372" />
+        <di:waypoint x="-353" y="245" />
+        <di:waypoint x="-353" y="314" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0rorc5j_di" bpmnElement="SequenceFlow_0rorc5j">
-        <di:waypoint x="-361" y="397" />
-        <di:waypoint x="-216" y="397" />
+        <di:waypoint x="-328" y="465" />
+        <di:waypoint x="-219" y="465" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="-342" y="380" width="19" height="14" />
+          <dc:Bounds x="-285" y="446" width="19" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ScriptTask_0p28c2m_di" bpmnElement="Task_17gh2c0">
-        <dc:Bounds x="-216" y="357" width="100" height="80" />
+        <dc:Bounds x="-219" y="425" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="UserTask_15iijtw_di" bpmnElement="Task_18ms6hk">
         <dc:Bounds x="-25" y="187" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1co4tvg_di" bpmnElement="SequenceFlow_1co4tvg">
-        <di:waypoint x="-116" y="397" />
-        <di:waypoint x="-70" y="397" />
+        <di:waypoint x="-119" y="465" />
+        <di:waypoint x="-70" y="465" />
         <di:waypoint x="-70" y="227" />
         <di:waypoint x="-25" y="227" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="EndEvent_033vdil_di" bpmnElement="EndEvent_033vdil">
-        <dc:Bounds x="139" y="209" width="36" height="36" />
+        <dc:Bounds x="200" y="209" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1v0dqtw_di" bpmnElement="SequenceFlow_1v0dqtw">
-        <di:waypoint x="25" y="187" />
-        <di:waypoint x="25" y="167" />
-        <di:waypoint x="157" y="167" />
-        <di:waypoint x="157" y="209" />
+        <di:waypoint x="75" y="227" />
+        <di:waypoint x="200" y="227" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="ScriptTask_0ozzx3x_di" bpmnElement="ScriptTask_0ozzx3x">
-        <dc:Bounds x="-262" y="496" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0vsk4hv_di" bpmnElement="SequenceFlow_0vsk4hv">
-        <di:waypoint x="-386" y="422" />
-        <di:waypoint x="-386" y="536" />
-        <di:waypoint x="-262" y="536" />
+        <di:waypoint x="-353" y="491" />
+        <di:waypoint x="-353" y="563" />
+        <di:waypoint x="-219" y="563" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="-379" y="476" width="17" height="14" />
+          <dc:Bounds x="-273" y="539" width="15" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SequenceFlow_0lfvd1g_di" bpmnElement="SequenceFlow_0lfvd1g">
-        <di:waypoint x="-162" y="536" />
-        <di:waypoint x="25" y="536" />
+      <bpmndi:BPMNShape id="BusinessRuleTask_0qj1v74_di" bpmnElement="Task_1qoqwsl">
+        <dc:Bounds x="-403" y="314" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_02d5ejb_di" bpmnElement="SequenceFlow_02d5ejb">
+        <di:waypoint x="-353" y="394" />
+        <di:waypoint x="-353" y="440" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ScriptTask_15lf0lz_di" bpmnElement="ScriptTask_15lf0lz">
+        <dc:Bounds x="-219" y="523" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_09i0t2w_di" bpmnElement="SequenceFlow_09i0t2w">
+        <di:waypoint x="-119" y="563" />
+        <di:waypoint x="25" y="563" />
         <di:waypoint x="25" y="267" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
