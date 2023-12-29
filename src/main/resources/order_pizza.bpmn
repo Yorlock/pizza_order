@@ -76,16 +76,10 @@
         <bpmn:incoming>SequenceFlow_0lnejtt</bpmn:incoming>
         <bpmn:outgoing>SequenceFlow_015cccx</bpmn:outgoing>
       </bpmn:callActivity>
-      <bpmn:sequenceFlow id="SequenceFlow_015cccx" sourceRef="Task_1unzbv4" targetRef="Task_174k6q9" />
-      <bpmn:scriptTask id="Task_174k6q9" name="Status of payment is ok" camunda:resultVariable="oplata_status">
-        <bpmn:incoming>SequenceFlow_015cccx</bpmn:incoming>
-        <bpmn:outgoing>SequenceFlow_06jwgj1</bpmn:outgoing>
-        <bpmn:script>${oplata_nrTransakcji}</bpmn:script>
-      </bpmn:scriptTask>
+      <bpmn:sequenceFlow id="SequenceFlow_015cccx" sourceRef="Task_1unzbv4" targetRef="EndEvent_18kw3gb" />
       <bpmn:endEvent id="EndEvent_18kw3gb">
-        <bpmn:incoming>SequenceFlow_06jwgj1</bpmn:incoming>
+        <bpmn:incoming>SequenceFlow_015cccx</bpmn:incoming>
       </bpmn:endEvent>
-      <bpmn:sequenceFlow id="SequenceFlow_06jwgj1" sourceRef="Task_174k6q9" targetRef="EndEvent_18kw3gb" />
     </bpmn:subProcess>
     <bpmn:sequenceFlow id="SequenceFlow_14ie2wi" sourceRef="SubProcess_0tzd685" targetRef="Task_17gh2c0" />
     <bpmn:sequenceFlow id="SequenceFlow_15y6lvx" sourceRef="BoundaryEvent_0z1vkwv" targetRef="Task_1260vcv" />
@@ -112,8 +106,6 @@ execution.setVariable("decyzja_uzasadnienie", "Pizza is delivered")</bpmn:script
         <camunda:formData>
           <camunda:formField id="oplata_nrKonta" label="nr Konta" type="string" />
           <camunda:formField id="oplata_kwota" label="kwota" type="long" />
-          <camunda:formField id="oplata_status" label="status platności" type="string" />
-          <camunda:formField id="oplata_CzyPoprawna" label="Czy oplacone" type="boolean" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_0rorc5j</bpmn:incoming>
@@ -260,11 +252,8 @@ execution.setVariable("decyzja_uzasadnienie", "Payment was rejected because of t
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_015cccx_di" bpmnElement="SequenceFlow_015cccx">
         <di:waypoint x="-10" y="81" />
-        <di:waypoint x="-10" y="146" />
+        <di:waypoint x="-10" y="120" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="ScriptTask_05p7g1q_di" bpmnElement="Task_174k6q9">
-        <dc:Bounds x="-60" y="146" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BoundaryEvent_15l8dk6_di" bpmnElement="BoundaryEvent_126pir2">
         <dc:Bounds x="-19" y="229" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -279,12 +268,8 @@ execution.setVariable("decyzja_uzasadnienie", "Payment was rejected because of t
         <di:waypoint x="-1" y="401" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="EndEvent_18kw3gb_di" bpmnElement="EndEvent_18kw3gb">
-        <dc:Bounds x="-140" y="168" width="36" height="36" />
+        <dc:Bounds x="-28" y="120" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_06jwgj1_di" bpmnElement="SequenceFlow_06jwgj1">
-        <di:waypoint x="-60" y="186" />
-        <di:waypoint x="-104" y="186" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_14ie2wi_di" bpmnElement="SequenceFlow_14ie2wi">
         <di:waypoint x="62" y="114" />
         <di:waypoint x="107" y="114" />
