@@ -1,0 +1,49 @@
+<form name="StanZamowienia">
+	<div class="form-group">
+		<label for="Imie">Imie</label>
+		<input class="form-control" cam-variable-type="String" cam-variable-name="zamowienie_imie" name="Imie" readonly="true" />
+	</div>
+	
+	<div class="form-group">  
+		<label for="Nazwisko">Nazwisko</label>  
+		<input class="form-control" cam-variable-type="String" cam-variable-name="zamowienie_nazwisko" name="Nazwisko" readonly="true" />   
+	</div>
+	
+	 <div class="form-group">  
+	 	<label for="Adres">Adres</label>  
+	 	<input class="form-control" cam-variable-type="String" cam-variable-name="zamowienie_adres" name="Adres" readonly="true" />   
+ 	</div>
+ 	
+ 	<div class="form-group">  
+ 		<label for="Miasto">Miasto</label>  
+ 		<input class="form-control" cam-variable-type="String" cam-variable-name="zamowienie_miasto" name="Miasto" readonly="true" />   
+	</div>
+	
+	<div class="form-group">  
+ 		<label for="Pizza">Pizza</label>
+ 		<select name="Pizza" cam-variable-name="zamowienie_pizza" cam-variable-type="String" class="form-control" id="pizza" readonly="true">
+		  <option value="Margherita">Margherita</option>
+		  <option value="Prosciutto">Prosciutto</option>
+		  <option value="Peperoni">Peperoni</option>
+		</select>
+	</div>
+	
+	<div class="form-group">  
+	 	<label for="Sztuk">Sztuk</label>  
+	 	<input class="form-control" type="number" cam-variable-type="Integer" cam-variable-name="zamowienie_sztuk" name="Sztuk" readonly="true"/>   
+ 	</div>
+	
+	<div class="form-group">
+	<label for="czyPozytywna">Czy dostarczona?</label>
+	<input
+	class="form-control"
+	cam-variable-name="decyzja_czyPozytywna"
+	name="czyPozytywna"
+	readonly="true" />
+	</div>
+	
+	<div class="form-group">
+	<label for="uzasadnienieDecyzji">Uzasadnienie</label>
+	<input class="form-control" cam-variable-name="decyzja_uzasadnienie" name="uzasadnienieDecyzji" readonly="true" />
+	</div>
+</form>
