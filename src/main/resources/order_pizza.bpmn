@@ -184,7 +184,6 @@ execution.setVariable("decyzja_uzasadnienie", "Pizza cannot be made")</bpmn:scri
         <camunda:formData>
           <camunda:formField id="oplata_nrKonta" label="nr Konta" type="string" />
           <camunda:formField id="oplata_kwota" label="kwota" type="long" />
-          <camunda:formField id="oplata_czyDostawa" label="Czy z dostawa" type="boolean" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_0rorc5j</bpmn:incoming>
@@ -262,7 +261,7 @@ execution.setVariable("decyzja_uzasadnienie", "Payment was rejected because of t
     <bpmn:sequenceFlow id="SequenceFlow_1g03a0r" sourceRef="BoundaryEvent_1tjct9b" targetRef="ScriptTask_0adr3jf" />
     <bpmn:sequenceFlow id="SequenceFlow_0wx1elt" sourceRef="BoundaryEvent_1mwzbql" targetRef="Task_01fma4g" />
     <bpmn:sequenceFlow id="SequenceFlow_1qtn2dx" name="No" sourceRef="ExclusiveGateway_0ikruhk" targetRef="Task_04841wi">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!oplata_czyDostawa}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!zamowienie_dostawa}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_17udysd" sourceRef="BoundaryEvent_10wbd8a" targetRef="Task_0sghqd5" />
     <bpmn:sequenceFlow id="SequenceFlow_1aaszj1" sourceRef="Task_0sghqd5" targetRef="Task_18ms6hk" />

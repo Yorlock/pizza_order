@@ -12,6 +12,11 @@
           <text>zamowienie_sztuk</text>
         </inputExpression>
       </input>
+      <input id="InputClause_1gjj0as" label="Delivery">
+        <inputExpression id="LiteralExpression_0efwjhk" typeRef="boolean">
+          <text>zamowienie_dostawa</text>
+        </inputExpression>
+      </input>
       <output id="output_1" label="Is order fine?" name="decyzja_czyRealizowacZamowienie" typeRef="boolean" />
       <output id="OutputClause_1n5tmlx" label="Reason" name="decyzja_uzasadnienie" typeRef="string" />
       <rule id="DecisionRule_0juaq7e">
@@ -21,11 +26,31 @@
         <inputEntry id="UnaryTests_081udg9">
           <text>&gt;= 25</text>
         </inputEntry>
+        <inputEntry id="UnaryTests_0tl0boo">
+          <text>false</text>
+        </inputEntry>
         <outputEntry id="LiteralExpression_0i8edmg">
           <text>false</text>
         </outputEntry>
         <outputEntry id="LiteralExpression_0toh7e4">
           <text>"The order is too large"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1u456fd">
+        <inputEntry id="UnaryTests_1ujbbcp">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1q9ivl6">
+          <text>&gt;= 15</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_097bw6h">
+          <text>true</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_17lrtcc">
+          <text>false</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1qe7f22">
+          <text>"The order is too large to deliver"</text>
         </outputEntry>
       </rule>
       <rule id="DecisionRule_0x37vwt">
@@ -35,10 +60,30 @@
         <inputEntry id="UnaryTests_1nt9bsc">
           <text>&lt;= 24</text>
         </inputEntry>
+        <inputEntry id="UnaryTests_09tvw7p">
+          <text>false</text>
+        </inputEntry>
         <outputEntry id="LiteralExpression_0hn9llw">
           <text>true</text>
         </outputEntry>
         <outputEntry id="LiteralExpression_019ll0x">
+          <text>"Everything is fine"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0oan0ev">
+        <inputEntry id="UnaryTests_0ggcqgx">
+          <text>not("Peperoni")</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1hg06ti">
+          <text>&lt;= 14</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1b3xak1">
+          <text>true</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1ckr959">
+          <text>true</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1dbpexl">
           <text>"Everything is fine"</text>
         </outputEntry>
       </rule>
@@ -48,6 +93,9 @@
         </inputEntry>
         <inputEntry id="UnaryTests_005svei">
           <text>&gt; 5</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0sfkry0">
+          <text></text>
         </inputEntry>
         <outputEntry id="LiteralExpression_11t0k7l">
           <text>false</text>
@@ -62,6 +110,9 @@
         </inputEntry>
         <inputEntry id="UnaryTests_15g2bjm">
           <text>&lt;= 5</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1ge3e3p">
+          <text></text>
         </inputEntry>
         <outputEntry id="LiteralExpression_0i8bn35">
           <text>true</text>
