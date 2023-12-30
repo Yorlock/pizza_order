@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1r3iic9" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.0.3">
+  <bpmn:process id="Process_1" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1dc8ssy">
+      <bpmn:outgoing>SequenceFlow_0z6d74v</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:scriptTask id="ScriptTask_10kr9dq" name="Refund money" camunda:resultVariable="oplata_nrTransakcji">
+      <bpmn:incoming>SequenceFlow_0z6d74v</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0p3kpks</bpmn:outgoing>
+      <bpmn:script>${''}</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:endEvent id="EndEvent_0b72srh">
+      <bpmn:incoming>SequenceFlow_0p3kpks</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0p3kpks" sourceRef="ScriptTask_10kr9dq" targetRef="EndEvent_0b72srh" />
+    <bpmn:sequenceFlow id="SequenceFlow_0z6d74v" sourceRef="StartEvent_1dc8ssy" targetRef="ScriptTask_10kr9dq" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="StartEvent_1dc8ssy_di" bpmnElement="StartEvent_1dc8ssy">
+        <dc:Bounds x="825" y="182" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ScriptTask_10kr9dq_di" bpmnElement="ScriptTask_10kr9dq">
+        <dc:Bounds x="1028" y="160" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_0b72srh_di" bpmnElement="EndEvent_0b72srh">
+        <dc:Bounds x="1195" y="182" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0p3kpks_di" bpmnElement="SequenceFlow_0p3kpks">
+        <di:waypoint x="1128" y="200" />
+        <di:waypoint x="1195" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0z6d74v_di" bpmnElement="SequenceFlow_0z6d74v">
+        <di:waypoint x="861" y="200" />
+        <di:waypoint x="1028" y="200" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
