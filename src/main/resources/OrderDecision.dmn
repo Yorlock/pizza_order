@@ -19,6 +19,7 @@
       </input>
       <output id="output_1" label="Is order fine?" name="decyzja_czyRealizowacZamowienie" typeRef="boolean" />
       <output id="OutputClause_1n5tmlx" label="Reason" name="decyzja_uzasadnienie" typeRef="string" />
+      <output id="OutputClause_0sb70yn" label="Give money back" name="decyzja_zwrot" typeRef="boolean" />
       <rule id="DecisionRule_0juaq7e">
         <inputEntry id="UnaryTests_0xoi3zz">
           <text></text>
@@ -34,6 +35,9 @@
         </outputEntry>
         <outputEntry id="LiteralExpression_0toh7e4">
           <text>"The order is too large"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0o9urnr">
+          <text>false</text>
         </outputEntry>
       </rule>
       <rule id="DecisionRule_1u456fd">
@@ -52,6 +56,9 @@
         <outputEntry id="LiteralExpression_1qe7f22">
           <text>"The order is too large to deliver"</text>
         </outputEntry>
+        <outputEntry id="LiteralExpression_1692jc2">
+          <text>false</text>
+        </outputEntry>
       </rule>
       <rule id="DecisionRule_0x37vwt">
         <inputEntry id="UnaryTests_1gj36lp">
@@ -68,6 +75,9 @@
         </outputEntry>
         <outputEntry id="LiteralExpression_019ll0x">
           <text>"Everything is fine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0ah8erz">
+          <text>false</text>
         </outputEntry>
       </rule>
       <rule id="DecisionRule_0oan0ev">
@@ -86,6 +96,9 @@
         <outputEntry id="LiteralExpression_1dbpexl">
           <text>"Everything is fine"</text>
         </outputEntry>
+        <outputEntry id="LiteralExpression_0b1wm6r">
+          <text>false</text>
+        </outputEntry>
       </rule>
       <rule id="DecisionRule_06nfhk1">
         <inputEntry id="UnaryTests_1du7s4i">
@@ -103,6 +116,9 @@
         <outputEntry id="LiteralExpression_0ltfkjx">
           <text>"Not enough ingredients"</text>
         </outputEntry>
+        <outputEntry id="LiteralExpression_17g8o4a">
+          <text>false</text>
+        </outputEntry>
       </rule>
       <rule id="DecisionRule_0jusetr">
         <inputEntry id="UnaryTests_0iq7jan">
@@ -119,6 +135,9 @@
         </outputEntry>
         <outputEntry id="LiteralExpression_05uekit">
           <text>"Everything is fine"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_090cv6h">
+          <text>false</text>
         </outputEntry>
       </rule>
     </decisionTable>

@@ -20,16 +20,14 @@
         <bpmn:flowNodeRef>ExclusiveGateway_0m3mk3p</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1qsqt8w" name="Delivery">
-        <bpmn:flowNodeRef>Task_19dbr6w</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_17gh2c0</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_01fma4g</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>BoundaryEvent_1mwzbql</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_19dbr6w</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>ExclusiveGateway_01vv5fr</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>BoundaryEvent_1mwzbql</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_0lq815j" name="Customer">
         <bpmn:flowNodeRef>Task_04841wi</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_18ms6hk</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>EndEvent_033vdil</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_0sghqd5</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>ScriptTask_14su8r5</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_1w26xis</bpmn:flowNodeRef>
@@ -39,8 +37,12 @@
         <bpmn:flowNodeRef>BoundaryEvent_0z1vkwv</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>BoundaryEvent_126pir2</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>ExclusiveGateway_0ikruhk</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>BoundaryEvent_10wbd8a</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>ExclusiveGateway_11b83gc</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>BoundaryEvent_10wbd8a</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_18ms6hk</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ScriptTask_1dmjqim</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>IntermediateThrowEvent_0skr5lh</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_033vdil</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:exclusiveGateway id="ExclusiveGateway_0rjixib" name="Can request be fulfilled?" default="SequenceFlow_0rorc5j">
@@ -77,24 +79,10 @@
       <bpmn:incoming>SequenceFlow_1qtn2dx</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_16kfb13</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:userTask id="Task_18ms6hk" name="Collect information about order" camunda:formKey="embedded:app:forms/StanZamowienia.html" camunda:assignee="${inicjator}">
-      <bpmn:incoming>SequenceFlow_1co4tvg</bpmn:incoming>
-      <bpmn:incoming>SequenceFlow_09i0t2w</bpmn:incoming>
-      <bpmn:incoming>SequenceFlow_1ufrpz1</bpmn:incoming>
-      <bpmn:incoming>SequenceFlow_1wh6ul1</bpmn:incoming>
-      <bpmn:incoming>SequenceFlow_1aaszj1</bpmn:incoming>
-      <bpmn:incoming>SequenceFlow_09828ho</bpmn:incoming>
-      <bpmn:incoming>SequenceFlow_0tg4hpk</bpmn:incoming>
-      <bpmn:incoming>SequenceFlow_01dfki6</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_1v0dqtw</bpmn:outgoing>
-    </bpmn:userTask>
-    <bpmn:endEvent id="EndEvent_033vdil">
-      <bpmn:incoming>SequenceFlow_1v0dqtw</bpmn:incoming>
-    </bpmn:endEvent>
     <bpmn:scriptTask id="ScriptTask_0adr3jf" name="Pizza cannot be made" scriptFormat="groovy">
       <bpmn:incoming>SequenceFlow_1g03a0r</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_1149xpv</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_09828ho</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_1c1mvp0</bpmn:outgoing>
       <bpmn:script>execution.setVariable("decyzja_czyPozytywna", false)
 execution.setVariable("decyzja_uzasadnienie", "Pizza cannot be made")</bpmn:script>
     </bpmn:scriptTask>
@@ -111,15 +99,6 @@ execution.setVariable("decyzja_uzasadnienie", "Pizza cannot be made")</bpmn:scri
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_0sibvuf</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_01zqqlv</bpmn:outgoing>
-    </bpmn:userTask>
-    <bpmn:userTask id="Task_19dbr6w" name="Deliver pizza" camunda:candidateGroups="Delivery">
-      <bpmn:extensionElements>
-        <camunda:formData>
-          <camunda:formField id="IsPizzaDelivered" label="Is pizza delivered?" type="boolean" />
-        </camunda:formData>
-      </bpmn:extensionElements>
-      <bpmn:incoming>SequenceFlow_1pl1rqd</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_03pxpfc</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:scriptTask id="Task_17gh2c0" name="Pizza is delivered by driver" scriptFormat="groovy">
       <bpmn:incoming>SequenceFlow_0n3dmv4</bpmn:incoming>
@@ -148,11 +127,11 @@ execution.setVariable("decyzja_uzasadnienie", "Pizza is picked up by customer")<
     <bpmn:scriptTask id="Task_01fma4g" name="Pizza cannot be delivered" scriptFormat="groovy">
       <bpmn:incoming>SequenceFlow_0wx1elt</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_10fygis</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_0tg4hpk</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_1qo9yb5</bpmn:outgoing>
       <bpmn:script>execution.setVariable("decyzja_czyPozytywna", false)
 execution.setVariable("decyzja_uzasadnienie", "Pizza cannot be made")</bpmn:script>
     </bpmn:scriptTask>
-    <bpmn:exclusiveGateway id="ExclusiveGateway_01vv5fr" name="Is pizza delivered?">
+    <bpmn:exclusiveGateway id="ExclusiveGateway_01vv5fr" name="Is pizza delivered?" default="SequenceFlow_0n3dmv4">
       <bpmn:incoming>SequenceFlow_03pxpfc</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0n3dmv4</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_10fygis</bpmn:outgoing>
@@ -235,12 +214,6 @@ execution.setVariable("decyzja_uzasadnienie", "Payment was rejected because of t
         <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT1M</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:boundaryEvent>
-    <bpmn:boundaryEvent id="BoundaryEvent_1mwzbql" name="Too long" attachedToRef="Task_19dbr6w">
-      <bpmn:outgoing>SequenceFlow_0wx1elt</bpmn:outgoing>
-      <bpmn:timerEventDefinition>
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT1M</bpmn:timeDuration>
-      </bpmn:timerEventDefinition>
-    </bpmn:boundaryEvent>
     <bpmn:sequenceFlow id="SequenceFlow_1qdw027" sourceRef="BoundaryEvent_18yk3bg" targetRef="Task_1260vcv" />
     <bpmn:sequenceFlow id="SequenceFlow_1wh6ul1" sourceRef="ScriptTask_0wnlouc" targetRef="Task_18ms6hk" />
     <bpmn:sequenceFlow id="SequenceFlow_1ufrpz1" sourceRef="Task_1260vcv" targetRef="Task_18ms6hk" />
@@ -265,8 +238,6 @@ execution.setVariable("decyzja_uzasadnienie", "Payment was rejected because of t
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_17udysd" sourceRef="BoundaryEvent_10wbd8a" targetRef="Task_0sghqd5" />
     <bpmn:sequenceFlow id="SequenceFlow_1aaszj1" sourceRef="Task_0sghqd5" targetRef="Task_18ms6hk" />
-    <bpmn:sequenceFlow id="SequenceFlow_09828ho" sourceRef="ScriptTask_0adr3jf" targetRef="Task_18ms6hk" />
-    <bpmn:sequenceFlow id="SequenceFlow_0tg4hpk" sourceRef="Task_01fma4g" targetRef="Task_18ms6hk" />
     <bpmn:sequenceFlow id="SequenceFlow_1149xpv" name="No" sourceRef="ExclusiveGateway_0m3mk3p" targetRef="ScriptTask_0adr3jf">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!isPizzaMade}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
@@ -283,23 +254,66 @@ execution.setVariable("decyzja_uzasadnienie", "Payment was rejected because of t
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_16gx2ll" name="Yes" sourceRef="ExclusiveGateway_11b83gc" targetRef="ScriptTask_14su8r5" />
     <bpmn:sequenceFlow id="SequenceFlow_01dfki6" sourceRef="ScriptTask_14su8r5" targetRef="Task_18ms6hk" />
+    <bpmn:userTask id="Task_19dbr6w" name="Deliver pizza" camunda:candidateGroups="Delivery">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="IsPizzaDelivered" label="Is pizza delivered?" type="boolean" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1pl1rqd</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_03pxpfc</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:boundaryEvent id="BoundaryEvent_1mwzbql" name="Too long" attachedToRef="Task_19dbr6w">
+      <bpmn:outgoing>SequenceFlow_0wx1elt</bpmn:outgoing>
+      <bpmn:timerEventDefinition>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT1M</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_1h9r2w0" sourceRef="IntermediateThrowEvent_0skr5lh" targetRef="ScriptTask_1dmjqim" />
+    <bpmn:sequenceFlow id="SequenceFlow_1qo9yb5" sourceRef="Task_01fma4g" targetRef="IntermediateThrowEvent_0skr5lh" />
+    <bpmn:sequenceFlow id="SequenceFlow_1c1mvp0" sourceRef="ScriptTask_0adr3jf" targetRef="IntermediateThrowEvent_0skr5lh" />
+    <bpmn:sequenceFlow id="SequenceFlow_1pr0xif" sourceRef="ScriptTask_1dmjqim" targetRef="Task_18ms6hk" />
+    <bpmn:userTask id="Task_18ms6hk" name="Collect information about order" camunda:formKey="embedded:app:forms/StanZamowienia.html" camunda:assignee="${inicjator}">
+      <bpmn:incoming>SequenceFlow_1co4tvg</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_09i0t2w</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_1ufrpz1</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_1wh6ul1</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_1aaszj1</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_01dfki6</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_1pr0xif</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1v0dqtw</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:scriptTask id="ScriptTask_1dmjqim" name="Inform about giving money back" scriptFormat="groovy">
+      <bpmn:incoming>SequenceFlow_1h9r2w0</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1pr0xif</bpmn:outgoing>
+      <bpmn:script>execution.setVariable("decyzja_zwrot", true)</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:intermediateThrowEvent id="IntermediateThrowEvent_0skr5lh" name="Give money back">
+      <bpmn:incoming>SequenceFlow_1qo9yb5</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_1c1mvp0</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1h9r2w0</bpmn:outgoing>
+      <bpmn:compensateEventDefinition waitForCompletion="false" />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:endEvent id="EndEvent_033vdil">
+      <bpmn:incoming>SequenceFlow_1v0dqtw</bpmn:incoming>
+    </bpmn:endEvent>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0fq241w">
       <bpmndi:BPMNShape id="Participant_0qvos9w_di" bpmnElement="zamowienie_pizzy">
-        <dc:Bounds x="-550" y="-483" width="1421" height="1194" />
+        <dc:Bounds x="-550" y="-481" width="1913" height="1192" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_0lq815j_di" bpmnElement="Lane_0lq815j">
-        <dc:Bounds x="-520" y="-172" width="1391" height="367" />
+        <dc:Bounds x="-520" y="-172" width="1883" height="367" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_1qsqt8w_di" bpmnElement="Lane_1qsqt8w">
-        <dc:Bounds x="-520" y="-483" width="1391" height="311" />
+        <dc:Bounds x="-520" y="-481" width="1883" height="309" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_11vcisd_di" bpmnElement="Lane_11vcisd">
-        <dc:Bounds x="-520" y="565" width="1391" height="146" />
+        <dc:Bounds x="-520" y="565" width="1883" height="146" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_0tiewd6_di" bpmnElement="Lane_0tiewd6">
-        <dc:Bounds x="-520" y="195" width="1391" height="370" />
+        <dc:Bounds x="-520" y="195" width="1883" height="370" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ExclusiveGateway_0rjixib_di" bpmnElement="ExclusiveGateway_0rjixib" isMarkerVisible="true">
         <dc:Bounds x="-405" y="352" width="50" height="50" />
@@ -337,11 +351,11 @@ execution.setVariable("decyzja_uzasadnienie", "Payment was rejected because of t
         <di:waypoint x="691" y="27" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="EndEvent_033vdil_di" bpmnElement="EndEvent_033vdil">
-        <dc:Bounds x="782" y="49" width="36" height="36" />
+        <dc:Bounds x="770" y="49" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1v0dqtw_di" bpmnElement="SequenceFlow_1v0dqtw">
         <di:waypoint x="723" y="67" />
-        <di:waypoint x="782" y="67" />
+        <di:waypoint x="770" y="67" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0vsk4hv_di" bpmnElement="SequenceFlow_0vsk4hv">
         <di:waypoint x="-380" y="402" />
@@ -451,9 +465,9 @@ execution.setVariable("decyzja_uzasadnienie", "Payment was rejected because of t
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1pl1rqd_di" bpmnElement="SequenceFlow_1pl1rqd">
         <di:waypoint x="174" y="1" />
-        <di:waypoint x="174" y="-242" />
+        <di:waypoint x="174" y="-220" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="180" y="-123" width="19" height="14" />
+          <dc:Bounds x="180" y="-113" width="19" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0sibvuf_di" bpmnElement="SequenceFlow_0sibvuf">
@@ -472,29 +486,26 @@ execution.setVariable("decyzja_uzasadnienie", "Payment was rejected because of t
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1g03a0r_di" bpmnElement="SequenceFlow_1g03a0r">
         <di:waypoint x="134" y="656" />
-        <di:waypoint x="522" y="656" />
         <di:waypoint x="472" y="656" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="UserTask_0ac49u6_di" bpmnElement="Task_14w1enw">
         <dc:Bounds x="16" y="592" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BoundaryEvent_14yqs3h_di" bpmnElement="BoundaryEvent_1mwzbql">
-        <dc:Bounds x="206" y="-260" width="36" height="36" />
+        <dc:Bounds x="206" y="-238" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="203" y="-219" width="42" height="14" />
+          <dc:Bounds x="203" y="-197" width="42" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0wx1elt_di" bpmnElement="SequenceFlow_0wx1elt">
-        <di:waypoint x="242" y="-242" />
-        <di:waypoint x="284" y="-242" />
-        <di:waypoint x="284" y="-220" />
+        <di:waypoint x="242" y="-220" />
         <di:waypoint x="326" y="-220" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ScriptTask_11jm635_di" bpmnElement="Task_01fma4g">
         <dc:Bounds x="326" y="-260" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="UserTask_1font7g_di" bpmnElement="Task_19dbr6w">
-        <dc:Bounds x="124" y="-322" width="100" height="80" />
+        <dc:Bounds x="124" y="-300" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1qtn2dx_di" bpmnElement="SequenceFlow_1qtn2dx">
         <di:waypoint x="198" y="27" />
@@ -522,16 +533,6 @@ execution.setVariable("decyzja_uzasadnienie", "Payment was rejected because of t
       <bpmndi:BPMNEdge id="SequenceFlow_1aaszj1_di" bpmnElement="SequenceFlow_1aaszj1">
         <di:waypoint x="572" y="67" />
         <di:waypoint x="623" y="67" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SequenceFlow_09828ho_di" bpmnElement="SequenceFlow_09828ho">
-        <di:waypoint x="572" y="656" />
-        <di:waypoint x="716" y="656" />
-        <di:waypoint x="716" y="106" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SequenceFlow_0tg4hpk_di" bpmnElement="SequenceFlow_0tg4hpk">
-        <di:waypoint x="426" y="-220" />
-        <di:waypoint x="673" y="-220" />
-        <di:waypoint x="673" y="27" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ExclusiveGateway_0m3mk3p_di" bpmnElement="ExclusiveGateway_0m3mk3p" isMarkerVisible="true">
         <dc:Bounds x="149" y="597" width="50" height="50" />
@@ -561,11 +562,11 @@ execution.setVariable("decyzja_uzasadnienie", "Payment was rejected because of t
       <bpmndi:BPMNShape id="ExclusiveGateway_01vv5fr_di" bpmnElement="ExclusiveGateway_01vv5fr" isMarkerVisible="true">
         <dc:Bounds x="351" y="-401" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="350" y="-438.5" width="51" height="27" />
+          <dc:Bounds x="350" y="-438" width="51" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_03pxpfc_di" bpmnElement="SequenceFlow_03pxpfc">
-        <di:waypoint x="174" y="-322" />
+        <di:waypoint x="174" y="-300" />
         <di:waypoint x="174" y="-376" />
         <di:waypoint x="351" y="-376" />
       </bpmndi:BPMNEdge>
@@ -617,6 +618,34 @@ execution.setVariable("decyzja_uzasadnienie", "Payment was rejected because of t
       <bpmndi:BPMNEdge id="SequenceFlow_01dfki6_di" bpmnElement="SequenceFlow_01dfki6">
         <di:waypoint x="646" y="-43" />
         <di:waypoint x="646" y="27" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ScriptTask_1dmjqim_di" bpmnElement="ScriptTask_1dmjqim">
+        <dc:Bounds x="826" y="88" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="IntermediateThrowEvent_0viy90a_di" bpmnElement="IntermediateThrowEvent_0skr5lh">
+        <dc:Bounds x="971" y="110" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1017" y="121" width="86" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1h9r2w0_di" bpmnElement="SequenceFlow_1h9r2w0">
+        <di:waypoint x="971" y="128" />
+        <di:waypoint x="926" y="128" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1qo9yb5_di" bpmnElement="SequenceFlow_1qo9yb5">
+        <di:waypoint x="426" y="-220" />
+        <di:waypoint x="989" y="-220" />
+        <di:waypoint x="989" y="110" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1c1mvp0_di" bpmnElement="SequenceFlow_1c1mvp0">
+        <di:waypoint x="572" y="656" />
+        <di:waypoint x="989" y="656" />
+        <di:waypoint x="989" y="146" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1pr0xif_di" bpmnElement="SequenceFlow_1pr0xif">
+        <di:waypoint x="826" y="128" />
+        <di:waypoint x="711" y="128" />
+        <di:waypoint x="711" y="107" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
